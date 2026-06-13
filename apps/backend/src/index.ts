@@ -1,0 +1,1 @@
+console.log("Mini Apty Backend Services Started...🚀");
