@@ -1,4 +1,4 @@
-import { ElementTarget } from "./elementTarget";
+import { ElementTarget } from "./element-target";
 
 export type AdvanceTrigger = "next-button" | "click-target" | "input-change";
 
