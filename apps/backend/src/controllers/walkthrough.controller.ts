@@ -11,10 +11,14 @@ export async function createWalkthroughController(
   req: Request,
   res: Response
 ) {
+  const userId =
+  (req as any).user?.userId ??
+  "dev-user-id";
+
   const walkthrough =
     await createWalkthrough({
       ...req.body,
-      ownerId: (req as any).user.userId,
+      userId
     });
 
   res.status(201).json(walkthrough);

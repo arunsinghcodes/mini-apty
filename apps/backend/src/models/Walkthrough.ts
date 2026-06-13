@@ -2,13 +2,21 @@ import mongoose from "mongoose";
 
 const StepSchema = new mongoose.Schema(
   {
-    order: Number,
-    title: String,
-    description: String,
-    target: Object,
-    advanceTrigger: String,
+    tagName: String,
+    id: String,
+    classNames: [String],
+    accessibleText: String,
+    ariaLabel: String,
+    role: String,
+    name: String,
+    placeholder: String,
+    cssSelector: String,
+    xpath: String,
+    dataAttributes: mongoose.Schema.Types.Mixed,
   },
-  { _id: false },
+  {
+    _id: false,
+  }
 );
 
 const WalkthroughSchema = new mongoose.Schema(
