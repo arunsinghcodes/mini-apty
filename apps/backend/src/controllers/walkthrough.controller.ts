@@ -4,34 +4,23 @@ import {
   getWalkthroughById,
   getWalkthroughs,
   updateWalkthrough,
-  deleteWalkthrough
+  deleteWalkthrough,
 } from "../services/walkthrough.service.js";
 
-export async function createWalkthroughController(
-  req: Request,
-  res: Response
-) {
-  const userId =
-  (req as any).user?.userId ??
-  "dev-user-id";
+export async function createWalkthroughController(req: Request, res: Response) {
+  const userId = (req as any).user?.userId ?? "dev-user-id";
 
-  const walkthrough =
-    await createWalkthrough({
-      ...req.body,
-      userId
-    });
+  const walkthrough = await createWalkthrough({
+    ...req.body,
+    userId,
+  });
 
   res.status(201).json(walkthrough);
 }
 
-export async function getWalkthroughsController(
-  req: Request,
-  res: Response
-) {
+export async function getWalkthroughsController(req: Request, res: Response) {
   try {
-    const walkthroughs = await getWalkthroughs(
-      (req as any).user.userId
-    );
+    const walkthroughs = await getWalkthroughs((req as any).user.userId);
 
     return res.status(200).json({
       success: true,
@@ -45,16 +34,9 @@ export async function getWalkthroughsController(
   }
 }
 
-export async function getWalkthroughController(
-  req: Request,
-  res: Response
-) {
+export async function getWalkthroughController(req: Request, res: Response) {
   try {
-    const walkthrough =
-      await getWalkthroughById(
-        req.params.id as string,
-        (req as any).user.userId
-      );
+    const walkthrough = await getWalkthroughById(req.params.id as string);
 
     if (!walkthrough) {
       return res.status(404).json({
@@ -67,25 +49,22 @@ export async function getWalkthroughController(
       success: true,
       data: walkthrough,
     });
-  } catch {
+  } catch (error) {
+    console.error(error);
+
     return res.status(500).json({
       success: false,
-      message: "Something went wrong.",
+      message: error instanceof Error ? error.message : "Something went wrong.",
     });
   }
 }
 
-
-
-export async function updateWalkthroughController(
-  req: Request,
-  res: Response
-) {
+export async function updateWalkthroughController(req: Request, res: Response) {
   try {
     const walkthrough = await updateWalkthrough(
       req.params.id as string,
       (req as any).user.userId,
-      req.body
+      req.body,
     );
 
     if (!walkthrough) {
@@ -111,14 +90,11 @@ export async function updateWalkthroughController(
   }
 }
 
-export async function deleteWalkthroughController(
-  req: Request,
-  res: Response
-) {
+export async function deleteWalkthroughController(req: Request, res: Response) {
   try {
     const walkthrough = await deleteWalkthrough(
       req.params.id as string,
-      (req as any).user.userId
+      (req as any).user.userId,
     );
 
     if (!walkthrough) {

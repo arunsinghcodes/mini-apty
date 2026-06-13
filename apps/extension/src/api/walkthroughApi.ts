@@ -17,3 +17,15 @@ export async function saveWalkthrough(payload: any) {
 
   return response.json();
 }
+
+export async function getWalkthrough(id: string) {
+  const response = await fetch(`${BASE_URL}/walkthroughs/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch walkthrough");
+  }
+
+  const result = await response.json();
+
+  return result.data;
+}

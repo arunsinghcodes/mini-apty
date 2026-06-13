@@ -1,7 +1,8 @@
 import { captureElement } from "./recorder/captureElement";
 import { getBestElement } from "../utils/getBestElement";
 import type { ElementTarget } from "@mini-apty/shared";
-import { saveWalkthrough } from "../api/walkthroughApi";
+import { getWalkthrough, saveWalkthrough } from "../api/walkthroughApi";
+import { playWalkthrough } from "./player/playWalkthrough";
 
 console.log("🚀 Content Script Loaded");
 
@@ -36,7 +37,7 @@ async function saveCurrentWalkthrough() {
       steps: recorder.steps,
     });
 
-    console.log("Hllo",{
+    console.log("Hllo", {
       title: recorder.title,
       origin: recorder.origin,
       pathPattern: recorder.pathPattern,
@@ -60,5 +61,18 @@ window.addEventListener("keydown", (event) => {
       steps: recorder.steps,
     });
     saveCurrentWalkthrough();
+  }
+});
+
+window.addEventListener("keydown", async (event) => {
+  if (event.key === "F10") {
+    // Replace with a real MongoDB walkthrough ID for now
+    const walkthrough = await getWalkthrough("6a2dabc9b4f693065c327774");
+
+    console.log("Walkthrough:", walkthrough);
+    console.log("Steps:", walkthrough.steps);
+    console.log(Array.isArray(walkthrough.steps));
+
+    await playWalkthrough(walkthrough);
   }
 });

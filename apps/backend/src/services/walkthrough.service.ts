@@ -8,11 +8,8 @@ export async function getWalkthroughs(ownerId: string) {
   return Walkthrough.find({ ownerId });
 }
 
-export async function getWalkthroughById(id: string, ownerId: string) {
-  return Walkthrough.findOne({
-    _id: id,
-    ownerId,
-  });
+export async function getWalkthroughById(id: string,) {
+  return  Walkthrough.findById(id);
 }
 
 export async function updateWalkthrough(
