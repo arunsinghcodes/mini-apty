@@ -1,7 +1,12 @@
 import app from "./app.js";
+import dotenv from "dotenv";
+import { connectDB } from "./db/connect.js";
+dotenv.config();
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend running on http://localhost:${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Backend running on http://localhost:${PORT}`);
+  });
 });
