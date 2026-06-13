@@ -22,3 +22,27 @@ export async function signup(email: string, password: string) {
     token: generateToken(user.id),
   };
 }
+
+export async function login(
+  email: string,
+  password: string
+) {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new Error("Invalid credentials");
+  }
+
+  const isValid = await bcrypt.compare(
+    password,
+    user.passwordHash
+  );
+
+  if (!isValid) {
+    throw new Error("Invalid credentials");
+  }
+
+  return {
+    token: generateToken(user.id),
+  };
+}
