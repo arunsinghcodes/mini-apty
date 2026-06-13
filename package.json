@@ -1,0 +1,12 @@
+{
+  "name": "mini-apty",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@10",
+  "scripts": {
+    "dev:backend": "pnpm --filter backend dev",
+    "build:extension": "pnpm --filter extension build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test"
+  }
+}
