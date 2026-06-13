@@ -1,12 +1,7 @@
-import { User } from "@mini-apty/shared";
+import app from "./app.js";
 
-const user: User = {
-  id: "1",
-  email: "test@example.com",
-  passwordHash: "hashed-password",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
+const PORT = 8080;
 
-console.log("Mini Apty Backend Services Started...🚀");
-console.log(user);
+app.listen(PORT, () => {
+  console.log(`🚀 Backend running on http://localhost:${PORT}`);
+});
