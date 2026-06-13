@@ -1,0 +1,46 @@
+#mini-apty-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  width: 320px;
+
+  background: white;
+
+  border-radius: 10px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+
+  z-index: 999999;
+
+  font-family: sans-serif;
+
+  overflow: hidden;
+}
+
+.mini-apty-header{
+  background:#2563eb;
+  color:white;
+  padding:12px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.mini-apty-body{
+  padding:16px;
+}
+
+.mini-apty-footer{
+  display:flex;
+  justify-content:space-between;
+
+  padding:12px;
+
+  border-top:1px solid #eee;
+}
+
+.mini-apty-footer button{
+  padding:8px 14px;
+
+  cursor:pointer;
+}
