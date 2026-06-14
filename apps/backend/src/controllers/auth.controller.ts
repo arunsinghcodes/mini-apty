@@ -28,7 +28,7 @@ export async function loginController(req: Request, res: Response) {
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: error instanceof Error ? error.message : "Login failed",
+      message: error instanceof Error ? error.message : "Invalid credentials",
     });
   }
 }

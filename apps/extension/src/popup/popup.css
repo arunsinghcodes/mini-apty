@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 340px;
+  font-family: Inter, sans-serif;
+  background: #f8fafc;
+}
+
+.popup-container {
+  padding: 24px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #4f46e5;
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: #4f46e5;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #4338ca;
+}
+
+.switch-text {
+  margin-top: 18px;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.switch-btn {
+  margin-top: 10px;
+  background: transparent;
+  color: #4f46e5;
+  border: none;
+  font-weight: 600;
+}
+
+.switch-btn:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+
+.error {
+  margin-top: 12px;
+  color: #dc2626;
+  font-size: 13px;
+  text-align: center;
+}
+
+.success {
+  margin-top: 12px;
+  color: #16a34a;
+  font-size: 13px;
+  text-align: center;
+}
+
+.home-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  background: #4338ca;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 20px 0;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #E95E35;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
