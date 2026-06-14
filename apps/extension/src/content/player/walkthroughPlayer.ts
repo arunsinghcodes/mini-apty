@@ -3,6 +3,7 @@ import { highlightElement } from "./highlight";
 import { createOverlay } from "../overlay/createOverlay";
 import { updateOverlay } from "../overlay/updateOverlay";
 import { removeOverlay } from "../overlay/removeOverlay";
+import { positionOverlay } from "../overlay/positionOverlay";
 
 export class WalkthroughPlayer {
   private currentStep = 0;
@@ -45,23 +46,28 @@ export class WalkthroughPlayer {
     this.currentStep = 0;
   }
 
-  private showStep() {
+  private async showStep() {
     const step = this.walkthrough.steps[this.currentStep];
-
-    if (!step) {
-      return;
-    }
 
     const element = findElement(step);
 
-    if (element) {
-      highlightElement(element as HTMLElement);
-    }
+    if (!element) return;
+
+    (element as HTMLElement).scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    highlightElement(element as HTMLElement);
 
     updateOverlay(
       this.currentStep + 1,
       this.walkthrough.steps.length,
       step.accessibleText || "Interact with this element",
     );
+
+    positionOverlay(element as HTMLElement);
   }
 }

@@ -1,7 +1,8 @@
 #mini-apty-overlay {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  transition:
+    top 0.3s ease,
+    left 0.3s ease;
   width: 320px;
   max-width: 420px;
   background: white;
@@ -19,10 +20,11 @@
 }
 
 .mini-apty-header{
-  background:#2563eb;
-  color:white;
+  background: #230b44;
+  color: #FF591A;
   padding:12px;
-  font-size:18px;
+  font-size:32px;
+  font-weight: 900;
   font-weight:bold;
 }
 
