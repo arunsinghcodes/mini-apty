@@ -2,20 +2,20 @@
   position: fixed;
   top: 20px;
   right: 20px;
-
   width: 320px;
-
+  max-width: 420px;
   background: white;
-
   border-radius: 10px;
-
   box-shadow: 0 4px 20px rgba(0,0,0,.2);
-
   z-index: 999999;
-
   font-family: sans-serif;
-
   overflow: hidden;
+}
+
+
+#mini-apty-description {
+  max-height: 180px;
+  overflow-y: auto;
 }
 
 .mini-apty-header{

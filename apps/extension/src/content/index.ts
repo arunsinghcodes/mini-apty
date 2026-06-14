@@ -5,6 +5,7 @@ import { getWalkthrough, saveWalkthrough } from "../api/walkthroughApi";
 import { playWalkthrough } from "./player/playWalkthrough";
 // @ts-ignore: Enable side-effect CSS import in TypeScript
 import "./overlay/styles.css";
+import { WalkthroughPlayer } from "./player/walkthroughPlayer";
 
 console.log("🚀 Content Script Loaded");
 
@@ -21,9 +22,12 @@ document.addEventListener(
   "click",
   (event) => {
     if (!recording) return;
-    const target = getBestElement(event.target as HTMLElement);
-    const step = captureElement(target);
-    recorder.steps.push(step);
+    const element = event.target as HTMLElement;
+    // Ignore extension UI
+    if (element.closest("#mini-apty-overlay")) return;
+    const target = getBestElement(element);
+    if (!target) return;
+    recorder.steps.push(captureElement(target));
     console.clear();
     console.table(recorder.steps);
   },
@@ -66,15 +70,39 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
+// window.addEventListener("keydown", async (event) => {
+//   if (event.key === "F10") {
+//     // Replace with a real MongoDB walkthrough ID for now
+//     const walkthrough = await getWalkthrough("6a2e2e04b0b9ca4c4a896012");
+
+//     console.log("Walkthrough:", walkthrough);
+//     console.log("Steps:", walkthrough.steps);
+//     console.log(Array.isArray(walkthrough.steps));
+
+//     await playWalkthrough(walkthrough);
+//   }
+// });
+
 window.addEventListener("keydown", async (event) => {
-  if (event.key === "F10") {
-    // Replace with a real MongoDB walkthrough ID for now
-    const walkthrough = await getWalkthrough("6a2db43bb4f693065c327779");
+  if (event.key !== "F10") return;
 
-    console.log("Walkthrough:", walkthrough);
-    console.log("Steps:", walkthrough.steps);
-    console.log(Array.isArray(walkthrough.steps));
+  const walkthrough = await getWalkthrough("6a2e3ea5b0b9ca4c4a896019");
 
-    await playWalkthrough(walkthrough);
-  }
+  console.log(walkthrough);
+
+  const player = new WalkthroughPlayer(walkthrough);
+
+  player.start();
+
+  document
+    .getElementById("mini-apty-next")
+    ?.addEventListener("click", () => player.next());
+
+  document
+    .getElementById("mini-apty-prev")
+    ?.addEventListener("click", () => player.previous());
+
+  document
+    .getElementById("mini-apty-close")
+    ?.addEventListener("click", () => player.close());
 });

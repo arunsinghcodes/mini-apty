@@ -1,11 +1,11 @@
-let overlay: HTMLDivElement | null = null;
-
 export function createOverlay() {
-  if (overlay) {
-    return overlay;
+  const existing = document.getElementById("mini-apty-overlay");
+
+  if (existing) {
+    return existing as HTMLDivElement;
   }
 
-  overlay = document.createElement("div");
+  const overlay = document.createElement("div");
 
   overlay.id = "mini-apty-overlay";
 
@@ -25,8 +25,17 @@ export function createOverlay() {
     </div>
 
     <div class="mini-apty-footer">
-      <button id="mini-apty-prev">Previous</button>
-      <button id="mini-apty-next">Next</button>
+      <button id="mini-apty-prev">
+        Previous
+      </button>
+
+      <button id="mini-apty-next">
+        Next
+      </button>
+
+      <button id="mini-apty-close">
+        Close
+      </button>
     </div>
   `;
 
