@@ -12,10 +12,7 @@ export async function getWalkthroughs(ownerId: string) {
     .sort({ createdAt: -1 });
 }
 
-export async function getWalkthroughById(
-  id: string,
-  ownerId: string
-) {
+export async function getWalkthroughById(id: string, ownerId: string) {
   return Walkthrough.findOne({
     _id: id,
     ownerId,
@@ -39,11 +36,7 @@ export async function updateWalkthrough(
   );
 }
 
-
-export async function deleteWalkthrough(
-  id: string,
-  ownerId: string
-) {
+export async function deleteWalkthrough(id: string, ownerId: string) {
   return Walkthrough.findOneAndDelete({
     _id: id,
     ownerId,

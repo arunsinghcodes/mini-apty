@@ -1,6 +1,6 @@
 import { getToken } from "../storage/auth";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
 
 export async function apiFetch(url: string, options: RequestInit = {}) {
   const token = await getToken();

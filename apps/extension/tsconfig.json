@@ -6,9 +6,9 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["chrome"],
+    "types": ["chrome", "vite/client"],
     "outDir": "dist",
     "composite": true
   },
-  "include": ["src"]
+  "include": ["src", "vite-env.d.ts"]
 }

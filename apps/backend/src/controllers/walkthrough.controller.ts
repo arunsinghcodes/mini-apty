@@ -1,130 +1,124 @@
 import { Request, Response } from "express";
+import Walkthrough from "../models/Walkthrough.js";
 import {
   createWalkthrough,
-  getWalkthroughById,
   getWalkthroughs,
   updateWalkthrough,
   deleteWalkthrough,
 } from "../services/walkthrough.service.js";
 
 export async function createWalkthroughController(req: Request, res: Response) {
-  const ownerId = (req as any).user.userId;
-
-  const walkthrough = await createWalkthrough({
-    ...req.body,
-    ownerId,
-  });
-
-  return res.status(201).json({
-    success: true,
-    data: walkthrough,
-  });
+  try {
+    const ownerId = (req as any).user.userId;
+    const walkthrough = await createWalkthrough({ ...req.body, ownerId });
+    return res.status(201).json({ success: true, data: walkthrough });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to create walkthrough" });
+  }
 }
 
 export async function getWalkthroughsController(req: Request, res: Response) {
   try {
-    const { origin } = req.query;
-
     const ownerId = (req as any).user.userId;
-
     const walkthroughs = await getWalkthroughs(ownerId);
-
-    return res.status(200).json({
-      success: true,
-      data: walkthroughs,
-    });
+    return res.status(200).json({ success: true, data: walkthroughs });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch walkthroughs.",
-    });
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to fetch walkthroughs" });
   }
 }
 
 export async function getWalkthroughController(req: Request, res: Response) {
   try {
-    const walkthrough = await getWalkthroughById(
-      req.params.id as string,
-      (req as any).user.userId,
-    );
+    const ownerId = (req as any).user.userId;
 
-    if (!walkthrough) {
-      return res.status(404).json({
-        success: false,
-        message: "Walkthrough not found.",
-      });
+    // Check if walkthrough exists at all
+    const exists = await Walkthrough.findById(req.params.id);
+
+    if (!exists) {
+      // 404 — genuinely doesn't exist
+      return res
+        .status(404)
+        .json({ success: false, message: "Walkthrough not found" });
     }
 
-    return res.json({
-      success: true,
-      data: walkthrough,
-    });
-  } catch (error) {
-    console.error(error);
+    if (exists.ownerId?.toString() !== ownerId) {
+      // 403 — exists but belongs to someone else
+      return res.status(403).json({ success: false, message: "Access denied" });
+    }
 
-    return res.status(500).json({
-      success: false,
-      message: error instanceof Error ? error.message : "Something went wrong.",
-    });
+    return res.json({ success: true, data: exists });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Something went wrong" });
   }
 }
 
 export async function updateWalkthroughController(req: Request, res: Response) {
   try {
-    const walkthrough = await updateWalkthrough(
+    const ownerId = (req as any).user.userId;
+
+    const exists = await Walkthrough.findById(req.params.id);
+
+    if (!exists) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Walkthrough not found" });
+    }
+
+    if (exists.ownerId?.toString() !== ownerId) {
+      // 403 — authenticated but not the owner
+      return res.status(403).json({ success: false, message: "Access denied" });
+    }
+
+    const updated = await updateWalkthrough(
       req.params.id as string,
-      (req as any).user.userId,
+      ownerId,
       req.body,
     );
 
-    if (!walkthrough) {
-      return res.status(404).json({
-        success: false,
-        message: "Walkthrough not found.",
-      });
-    }
-
     return res.status(200).json({
       success: true,
-      data: walkthrough,
-      message: "Walkthrough updated successfully.",
+      data: updated,
+      message: "Walkthrough updated successfully",
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Failed to update walkthrough.",
-    });
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to update walkthrough" });
   }
 }
 
 export async function deleteWalkthroughController(req: Request, res: Response) {
   try {
-    const walkthrough = await deleteWalkthrough(
-      req.params.id as string,
-      (req as any).user.userId,
-    );
+    const ownerId = (req as any).user.userId;
 
-    if (!walkthrough) {
-      return res.status(404).json({
-        success: false,
-        message: "Walkthrough not found.",
-      });
+    const exists = await Walkthrough.findById(req.params.id);
+
+    if (!exists) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Walkthrough not found" });
     }
+
+    if (exists.ownerId?.toString() !== ownerId) {
+      // 403 — exists but user doesn't own it
+      return res.status(403).json({ success: false, message: "Access denied" });
+    }
+
+    await deleteWalkthrough(req.params.id as string, ownerId);
 
     return res.status(200).json({
       success: true,
-      message: "Walkthrough deleted successfully.",
+      message: "Walkthrough deleted successfully",
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Failed to delete walkthrough.",
-    });
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to delete walkthrough" });
   }
 }
