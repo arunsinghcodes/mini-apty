@@ -1,19 +1,11 @@
 import { saveWalkthroughCache } from "../storage/cache";
 import { apiFetch } from "../utils/api";
 
-const BASE_URL = "http://localhost:8080";
-
 export async function saveWalkthrough(payload: any) {
-  const response = await apiFetch(`${BASE_URL}/walkthroughs`, {
+  const result = await apiFetch("/walkthroughs", {
     method: "POST",
     body: JSON.stringify(payload),
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to save walkthrough");
-  }
-
-  const result = await response.json();
 
   await saveWalkthroughCache(
     result.data.origin,
@@ -25,13 +17,7 @@ export async function saveWalkthrough(payload: any) {
 }
 
 export async function getWalkthrough(id: string) {
-  const response = await apiFetch(`${BASE_URL}/walkthroughs/${id}`);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch walkthrough");
-  }
-
-  const result = await response.json();
+  const result = await apiFetch(`/walkthroughs/${id}`);
 
   await saveWalkthroughCache(
     result.data.origin,
@@ -43,17 +29,26 @@ export async function getWalkthrough(id: string) {
 }
 
 export async function getWalkthroughs() {
-  const response = await apiFetch(
-    `${BASE_URL}/walkthroughs?origin=${encodeURIComponent(
-      window.location.origin,
-    )}`,
-  );
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch walkthroughs");
+  if (!tab.url) {
+    return [];
   }
 
-  const result = await response.json();
+  const origin = new URL(tab.url).origin;
+
+  const result = await apiFetch(
+    `/walkthroughs?origin=${encodeURIComponent(origin)}`,
+  );
 
   return result.data;
+}
+
+export async function deleteWalkthrough(id: string) {
+  return apiFetch(`/walkthroughs/${id}`, {
+    method: "DELETE",
+  });
 }

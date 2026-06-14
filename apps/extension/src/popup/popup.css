@@ -229,3 +229,61 @@ button:disabled {
   margin: 20px 0;
   border-top: 1px solid #ececec;
 }
+
+
+.walkthrough-card {
+  background: white;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.05);
+  transition: .2s;
+}
+
+.walkthrough-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(79,70,229,.12);
+}
+
+.walkthrough-header h3 {
+  margin: 0;
+  color: #222;
+  font-size: 17px;
+}
+
+.walkthrough-origin,
+.walkthrough-path {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+.walkthrough-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.play-btn {
+  flex: 1;
+  background: #4f46e5;
+  color: white;
+}
+
+.play-btn:hover {
+  background: #4338ca;
+}
+
+.delete-btn {
+  flex: 1;
+  background: #fff4ef;
+  color: #e95e35;
+  border: 1px solid #ffd7ca;
+}
+
+.delete-btn:hover {
+  background: #e95e35;
+  color: white;
+}

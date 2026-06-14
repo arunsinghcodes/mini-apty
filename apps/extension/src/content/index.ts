@@ -116,3 +116,62 @@ window.addEventListener("keydown", async (event) => {
     console.log("✅ Token saved");
   }
 });
+
+
+chrome.runtime.onMessage.addListener(
+  (message, sender, sendResponse) => {
+    if (message.type === "START_RECORDING") {
+      recording = true;
+
+      console.log("🎥 Recording Started");
+
+      sendResponse({
+        success: true,
+      });
+    }
+
+    if (message.type === "STOP_RECORDING") {
+      recording = false;
+
+      console.log("🛑 Recording Stopped");
+
+      saveCurrentWalkthrough();
+
+      sendResponse({
+        success: true,
+      });
+    }
+
+    return true;
+  },
+);
+
+chrome.runtime.onMessage.addListener(async (message) => {
+  if (message.type === "PLAY_WALKTHROUGH") {
+    console.log("Received PLAY message:", message);
+
+    try {
+      const walkthrough = await getWalkthrough(message.walkthroughId);
+
+      console.log("Walkthrough:", walkthrough);
+
+      const player = new WalkthroughPlayer(walkthrough);
+
+      player.start();
+
+      document
+        .getElementById("mini-apty-next")
+        ?.addEventListener("click", () => player.next());
+
+      document
+        .getElementById("mini-apty-prev")
+        ?.addEventListener("click", () => player.previous());
+
+      document
+        .getElementById("mini-apty-close")
+        ?.addEventListener("click", () => player.close());
+    } catch (err) {
+      console.error("Play failed:", err);
+    }
+  }
+});

@@ -27,7 +27,7 @@ export async function getWalkthroughsController(req: Request, res: Response) {
 
     const ownerId = (req as any).user.userId;
 
-    const walkthroughs = await getWalkthroughs(origin as string, ownerId);
+    const walkthroughs = await getWalkthroughs(ownerId);
 
     return res.status(200).json({
       success: true,

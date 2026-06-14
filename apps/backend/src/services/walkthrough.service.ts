@@ -4,12 +4,12 @@ export async function createWalkthrough(data: any) {
   return Walkthrough.create(data);
 }
 
-export async function getWalkthroughs(origin: string, ownerId: string) {
+export async function getWalkthroughs(ownerId: string) {
   return Walkthrough.find({
-    origin,
     ownerId,
-  }).select("_id title origin pathPattern")
-  .sort({ createdAt: -1 }); // newest first
+  })
+    .select("_id title origin pathPattern")
+    .sort({ createdAt: -1 });
 }
 
 export async function getWalkthroughById(
