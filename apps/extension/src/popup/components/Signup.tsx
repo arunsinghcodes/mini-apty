@@ -65,41 +65,57 @@ export default function Signup({ onBackToLogin }: Props) {
 
   return (
     <div className="popup-container">
-      <h1>🚀 Mini Apty</h1>
+      <div className="header">
+        <h1>
+          <span className="mini">Mini</span> <span className="apty">Apty</span>
+        </h1>
 
-      <p className="subtitle">Create your account</p>
+        <p className="subtitle">Digital Adoption Platform</p>
+      </div>
 
-      <input
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      <div className="auth-card">
+        <h2 className="auth-title">Create your account ✨</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <p className="auth-description">
+          Start creating and managing interactive walkthroughs in minutes.
+        </p>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          placeholder="Full name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      {error && <p className="error">{error}</p>}
+        <input
+          type="email"
+          placeholder="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleSignup} disabled={loading}>
-        {loading ? "Creating..." : "Create Account"}
-      </button>
+        <input
+          type="password"
+          placeholder="Create a password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <div className="switch-text">Already have an account?</div>
+        {error && <p className="error">{error}</p>}
 
-      <button className="switch-btn" onClick={onBackToLogin}>
-        Login
-      </button>
+        <button onClick={handleSignup} disabled={loading}>
+          {loading ? "Creating Account..." : "Create Account"}
+        </button>
+
+        <div className="divider"></div>
+
+        <div className="switch-text">Already have an account?</div>
+
+        <button className="switch-btn" onClick={onBackToLogin}>
+          Sign In →
+        </button>
+      </div>
+
+      <div className="footer">Secure authentication powered by JWT</div>
     </div>
   );
 }

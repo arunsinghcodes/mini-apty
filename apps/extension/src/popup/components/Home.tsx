@@ -12,21 +12,44 @@ function Home() {
 
   return (
     <div className="popup-container">
-      <h1>🚀 Mini Apty</h1>
+      <div className="header">
+        <h1>
+          <span className="mini">Mini</span>{" "}
+          <span className="apty">Apty</span>
+        </h1>
 
-      <p className="subtitle">Create and manage your walkthroughs</p>
+        <p className="subtitle">
+          Digital Adoption Platform
+        </p>
+      </div>
 
-      <button className="home-btn">🎥 Start Recording</button>
+      <button className="home-btn">
+        <div className="btn-title">🎥 Start Recording</div>
+        <span>Capture a walkthrough on this page</span>
+      </button>
 
-      <button className="home-btn">⏹ Stop Recording</button>
+      <button className="home-btn">
+        <div className="btn-title">⏹ Stop Recording</div>
+        <span>Finish the active recording session</span>
+      </button>
 
-      <button className="home-btn">📚 My Walkthroughs</button>
+      <button className="home-btn">
+        <div className="btn-title">📚 My Walkthroughs</div>
+        <span>Manage and preview saved guides</span>
+      </button>
 
       <div className="divider"></div>
 
-      <button className="logout-btn" onClick={handleLogout}>
+      <button
+        className="logout-btn"
+        onClick={handleLogout}
+      >
         🚪 Logout
       </button>
+
+      <div className="footer">
+        Mini Apty • Powered by React + MV3
+      </div>
     </div>
   );
 }

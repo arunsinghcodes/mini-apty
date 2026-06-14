@@ -41,9 +41,8 @@ function Login({ onSignup }: Props) {
         password,
       });
 
-     await saveToken(result.token);
-    loginStore(result.token);
-
+      await saveToken(result.token);
+      loginStore(result.token);
     } catch (err: any) {
       setError(err?.message || "Invalid email or password");
     } finally {
@@ -53,35 +52,51 @@ function Login({ onSignup }: Props) {
 
   return (
     <div className="popup-container">
-      <h1>🚀 Mini Apty</h1>
+      <div className="header">
+        <h1>
+          <span className="mini">Mini</span> <span className="apty">Apty</span>
+        </h1>
 
-      <p className="subtitle">Welcome back</p>
+        <p className="subtitle">Digital Adoption Platform</p>
+      </div>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className="auth-card">
+        <h2 className="auth-title">Welcome back 👋</h2>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <p className="auth-description">
+          Sign in to continue creating and managing walkthroughs.
+        </p>
 
-      {error && <p className="error">{error}</p>}
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleLogin} disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
-      </button>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <div className="switch-text">Don't have an account?</div>
+        {error && <p className="error">{error}</p>}
 
-      <button className="switch-btn" onClick={onSignup}>
-        Create Account
-      </button>
+        <button onClick={handleLogin} disabled={loading}>
+          {loading ? "Signing in..." : "Sign In"}
+        </button>
+
+        <div className="divider"></div>
+
+        <div className="switch-text">New to Mini Apty?</div>
+
+        <button className="switch-btn" onClick={onSignup}>
+          Create Account →
+        </button>
+      </div>
+
+      <div className="footer">Secure authentication powered by JWT</div>
     </div>
   );
 }
