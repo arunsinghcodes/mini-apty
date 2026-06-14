@@ -8,21 +8,26 @@ import {
 } from "../services/walkthrough.service.js";
 
 export async function createWalkthroughController(req: Request, res: Response) {
-  const userId = (req as any).user?.userId ?? "dev-user-id";
+  const ownerId = (req as any).user.userId;
 
   const walkthrough = await createWalkthrough({
     ...req.body,
-    userId,
+    ownerId,
   });
 
-  res.status(201).json(walkthrough);
+  return res.status(201).json({
+    success: true,
+    data: walkthrough,
+  });
 }
 
 export async function getWalkthroughsController(req: Request, res: Response) {
   try {
     const { origin } = req.query;
 
-    const walkthroughs = await getWalkthroughs(origin as string);
+    const ownerId = (req as any).user.userId;
+
+    const walkthroughs = await getWalkthroughs(origin as string, ownerId);
 
     return res.status(200).json({
       success: true,
@@ -38,7 +43,10 @@ export async function getWalkthroughsController(req: Request, res: Response) {
 
 export async function getWalkthroughController(req: Request, res: Response) {
   try {
-    const walkthrough = await getWalkthroughById(req.params.id as string);
+    const walkthrough = await getWalkthroughById(
+      req.params.id as string,
+      (req as any).user.userId,
+    );
 
     if (!walkthrough) {
       return res.status(404).json({

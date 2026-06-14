@@ -11,7 +11,7 @@ import {
 const router: Router = Router();
 
 // Protect all walkthrough routes
-// router.use(authMiddleware);
+router.use(authMiddleware);
 
 // Create a new walkthrough
 router.post("/", createWalkthroughController);

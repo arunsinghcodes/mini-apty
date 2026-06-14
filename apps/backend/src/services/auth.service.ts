@@ -1,48 +1,87 @@
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-import { generateToken } from "../auth/jwt.js";
+const JWT_SECRET =
+  process.env.JWT_SECRET || "mini-apty-secret";
 
-export async function signup(email: string, password: string) {
-  const exists = await User.findOne({ email });
+export async function signup(data: {
+  name: string;
+  email: string;
+  password: string;
+}) {
+  const existingUser = await User.findOne({
+    email: data.email,
+  });
 
-  if (exists) {
+  if (existingUser) {
     throw new Error("User already exists");
   }
 
-  const passwordHash = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(
+    data.password,
+    10
+  );
 
   const user = await User.create({
-    email,
-    passwordHash,
+    name: data.name,
+    email: data.email,
+    password: hashedPassword,
   });
 
+  const token = jwt.sign(
+    {
+      userId: user._id,
+    },
+    JWT_SECRET,
+    {
+      expiresIn: "7d",
+    }
+  );
+
   return {
-    token: generateToken(user.id),
+    token,
+    user,
   };
 }
 
-export async function login(
-  email: string,
-  password: string
-) {
-  const user = await User.findOne({ email });
+export async function login(data: {
+  email: string;
+  password: string;
+}) {
+  const user = await User.findOne({
+    email: data.email,
+  });
 
   if (!user) {
     throw new Error("Invalid credentials");
   }
 
   const isValid = await bcrypt.compare(
-    password,
-    user.passwordHash
+    data.password,
+    user.password
   );
 
   if (!isValid) {
     throw new Error("Invalid credentials");
   }
 
+  const token = jwt.sign(
+    {
+      userId: user._id,
+    },
+    JWT_SECRET,
+    {
+      expiresIn: "7d",
+    }
+  );
+
   return {
-    token: generateToken(user.id),
+    token,
+    user,
   };
+}
+
+export async function getCurrentUser(userId: string) {
+  return User.findById(userId).select("-password");
 }

@@ -1,7 +1,9 @@
+import { apiFetch } from "../utils/api";
+
 const BASE_URL = "http://localhost:8080";
 
 export async function saveWalkthrough(payload: any) {
-  const response = await fetch(`${BASE_URL}/walkthroughs`, {
+  const response = await apiFetch(`${BASE_URL}/walkthroughs`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +21,7 @@ export async function saveWalkthrough(payload: any) {
 }
 
 export async function getWalkthrough(id: string) {
-  const response = await fetch(`${BASE_URL}/walkthroughs/${id}`);
+  const response = await apiFetch(`${BASE_URL}/walkthroughs/${id}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch walkthrough");
@@ -31,7 +33,7 @@ export async function getWalkthrough(id: string) {
 }
 
 export async function getWalkthroughs() {
-  const response = await fetch(
+  const response = await apiFetch(
     `${BASE_URL}/walkthroughs?origin=${encodeURIComponent(
       window.location.origin
     )}`

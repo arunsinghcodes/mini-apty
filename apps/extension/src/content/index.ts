@@ -10,6 +10,7 @@ import { playWalkthrough } from "./player/playWalkthrough";
 // @ts-ignore: Enable side-effect CSS import in TypeScript
 import "./overlay/styles.css";
 import { WalkthroughPlayer } from "./player/walkthroughPlayer";
+import { saveToken } from "../storage/auth";
 
 console.log("🚀 Content Script Loaded");
 
@@ -104,4 +105,14 @@ window.addEventListener("keydown", async (event) => {
   document
     .getElementById("mini-apty-close")
     ?.addEventListener("click", () => player.close());
+});
+
+window.addEventListener("keydown", async (event) => {
+  if (event.key === "F8") {
+    await saveToken(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTJlOTQ3NTI4NmE2YmFiNjE4MGZhNjciLCJpYXQiOjE3ODE0Mzc1ODIsImV4cCI6MTc4MjA0MjM4Mn0.Bk4k19nbbKMd5CKQsV4mg4nRFxXEwvvzRI4Wm-ymhoE"
+    );
+
+    console.log("✅ Token saved");
+  }
 });
