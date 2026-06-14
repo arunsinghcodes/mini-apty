@@ -1,3 +1,4 @@
+import { saveWalkthroughCache } from "../storage/cache";
 import { apiFetch } from "../utils/api";
 
 const BASE_URL = "http://localhost:8080";
@@ -5,11 +6,6 @@ const BASE_URL = "http://localhost:8080";
 export async function saveWalkthrough(payload: any) {
   const response = await apiFetch(`${BASE_URL}/walkthroughs`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // Later
-      // Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(payload),
   });
 
@@ -17,7 +13,15 @@ export async function saveWalkthrough(payload: any) {
     throw new Error("Failed to save walkthrough");
   }
 
-  return response.json();
+  const result = await response.json();
+
+  await saveWalkthroughCache(
+    result.data.origin,
+    result.data.pathPattern,
+    result.data,
+  );
+
+  return result.data;
 }
 
 export async function getWalkthrough(id: string) {
@@ -29,14 +33,20 @@ export async function getWalkthrough(id: string) {
 
   const result = await response.json();
 
+  await saveWalkthroughCache(
+    result.data.origin,
+    result.data.pathPattern,
+    result.data,
+  );
+
   return result.data;
 }
 
 export async function getWalkthroughs() {
   const response = await apiFetch(
     `${BASE_URL}/walkthroughs?origin=${encodeURIComponent(
-      window.location.origin
-    )}`
+      window.location.origin,
+    )}`,
   );
 
   if (!response.ok) {
