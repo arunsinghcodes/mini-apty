@@ -20,7 +20,9 @@ export async function createWalkthroughController(req: Request, res: Response) {
 
 export async function getWalkthroughsController(req: Request, res: Response) {
   try {
-    const walkthroughs = await getWalkthroughs((req as any).user.userId);
+    const { origin } = req.query;
+
+    const walkthroughs = await getWalkthroughs(origin as string);
 
     return res.status(200).json({
       success: true,

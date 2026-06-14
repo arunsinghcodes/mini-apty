@@ -47,11 +47,22 @@ export class WalkthroughPlayer {
   }
 
   private async showStep() {
+    // console.log("showStep called");
+
     const step = this.walkthrough.steps[this.currentStep];
+
+    // console.log("step", step);
 
     const element = findElement(step);
 
-    if (!element) return;
+    // console.log("element", element);
+
+    if (!element) {
+      // console.log("element not found");
+      return;
+    }
+
+    // console.log("before scroll");
 
     (element as HTMLElement).scrollIntoView({
       behavior: "smooth",
@@ -60,7 +71,11 @@ export class WalkthroughPlayer {
 
     await new Promise((resolve) => setTimeout(resolve, 500));
 
+    // console.log("before highlight");
+
     highlightElement(element as HTMLElement);
+
+    // console.log("before updateOverlay");
 
     updateOverlay(
       this.currentStep + 1,
@@ -68,6 +83,10 @@ export class WalkthroughPlayer {
       step.accessibleText || "Interact with this element",
     );
 
+    // console.log("before positionOverlay");
+
     positionOverlay(element as HTMLElement);
+
+    // console.log("after positionOverlay");
   }
 }

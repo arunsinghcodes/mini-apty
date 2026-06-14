@@ -1,7 +1,11 @@
 import { captureElement } from "./recorder/captureElement";
 import { getBestElement } from "../utils/getBestElement";
 import type { ElementTarget } from "@mini-apty/shared";
-import { getWalkthrough, saveWalkthrough } from "../api/walkthroughApi";
+import {
+  getWalkthrough,
+  getWalkthroughs,
+  saveWalkthrough,
+} from "../api/walkthroughApi";
 import { playWalkthrough } from "./player/playWalkthrough";
 // @ts-ignore: Enable side-effect CSS import in TypeScript
 import "./overlay/styles.css";
@@ -70,23 +74,18 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-// window.addEventListener("keydown", async (event) => {
-//   if (event.key === "F10") {
-//     // Replace with a real MongoDB walkthrough ID for now
-//     const walkthrough = await getWalkthrough("6a2e2e04b0b9ca4c4a896012");
-
-//     console.log("Walkthrough:", walkthrough);
-//     console.log("Steps:", walkthrough.steps);
-//     console.log(Array.isArray(walkthrough.steps));
-
-//     await playWalkthrough(walkthrough);
-//   }
-// });
-
 window.addEventListener("keydown", async (event) => {
   if (event.key !== "F10") return;
 
-  const walkthrough = await getWalkthrough("6a2e3ea5b0b9ca4c4a896019");
+  const walkthroughs = await getWalkthroughs();
+
+  if (walkthroughs.length === 0) {
+    console.log("No walkthrough found");
+    return;
+  }
+
+  // Play the first matching walkthrough
+  const walkthrough = await getWalkthrough(walkthroughs[0]._id);
 
   console.log(walkthrough);
 

@@ -1,7 +1,14 @@
 export function positionOverlay(element: HTMLElement) {
+  console.log("positionOverlay called");
+
   const overlay = document.getElementById("mini-apty-overlay");
 
-  if (!overlay) return;
+  console.log("overlay", overlay);
+
+  if (!overlay) {
+    console.log("overlay not found");
+    return;
+  }
 
   const rect = element.getBoundingClientRect();
 
@@ -34,4 +41,12 @@ export function positionOverlay(element: HTMLElement) {
 
   overlay.style.left = `${left}px`;
   overlay.style.top = `${top}px`;
+
+  // console.log({
+  //   top,
+  //   left,
+  //   rect,
+  //   viewportWidth: window.innerWidth,
+  //   viewportHeight: window.innerHeight,
+  // });
 }

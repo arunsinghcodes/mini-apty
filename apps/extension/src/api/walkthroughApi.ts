@@ -29,3 +29,19 @@ export async function getWalkthrough(id: string) {
 
   return result.data;
 }
+
+export async function getWalkthroughs() {
+  const response = await fetch(
+    `${BASE_URL}/walkthroughs?origin=${encodeURIComponent(
+      window.location.origin
+    )}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch walkthroughs");
+  }
+
+  const result = await response.json();
+
+  return result.data;
+}

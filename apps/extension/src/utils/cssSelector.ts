@@ -1,20 +1,44 @@
 export function getCssSelector(element: HTMLElement): string {
   if (element.id) {
-    return `#${element.id}`;
+    return `#${CSS.escape(element.id)}`;
   }
 
   const path: string[] = [];
 
-  while (element.parentElement && element.tagName.toLowerCase() !== "html") {
-    let selector = element.tagName.toLowerCase();
+  let current: HTMLElement | null = element;
 
-    if (element.classList.length > 0) {
-      selector += "." + [...element.classList].join(".");
+  while (current && current.tagName.toLowerCase() !== "body") {
+    let selector = current.tagName.toLowerCase();
+
+    // Keep only useful classes
+    const classes = [...current.classList].filter((cls) => {
+      return (
+        !cls.startsWith("elementor-") &&
+        !cls.startsWith("e-") &&
+        !cls.startsWith("wp-") &&
+        !cls.startsWith("vc_") &&
+        !cls.startsWith("js-") &&
+        !cls.startsWith("swiper-") &&
+        !cls.startsWith("slick-") &&
+        !cls.startsWith("css-") &&
+        !/^\d/.test(cls) &&
+        cls.length < 40
+      );
+    });
+
+    if (classes.length > 0) {
+      selector += "." + classes.slice(0, 2).join(".");
     }
 
     path.unshift(selector);
 
-    element = element.parentElement;
+    // Stop early if parent has id
+    if (current.parentElement?.id) {
+      path.unshift(`#${CSS.escape(current.parentElement.id)}`);
+      break;
+    }
+
+    current = current.parentElement;
   }
 
   return path.join(" > ");
