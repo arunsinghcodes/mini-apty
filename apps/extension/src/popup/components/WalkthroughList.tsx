@@ -34,23 +34,23 @@ function WalkthroughList({ onBack }: Props) {
   // }, []);
 
   useEffect(() => {
-  async function fetchWalkthroughs() {
-    try {
-      const data = await getWalkthroughs();
+    async function fetchWalkthroughs() {
+      try {
+        const data = await getWalkthroughs();
 
-      console.log("API Response:", data);
-      console.log("Is Array:", Array.isArray(data));
+        console.log("API Response:", data);
+        console.log("Is Array:", Array.isArray(data));
 
-      setWalkthroughs(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+        setWalkthroughs(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
 
-  fetchWalkthroughs();
-}, []);
+    fetchWalkthroughs();
+  }, []);
 
   async function handlePlay(id: string) {
     const [tab] = await chrome.tabs.query({
@@ -74,11 +74,13 @@ function WalkthroughList({ onBack }: Props) {
 
   return (
     <div className="popup-container">
-      <h2>📚 My Walkthroughs</h2>
+      <div className="walkthrough-header">
+        <h2>📚 My Walkthroughs</h2>
 
-      <button className="switch-btn" onClick={onBack}>
-        ← Back
-      </button>
+        <button className="switch-btn" onClick={onBack}>
+          ← Back
+        </button>
+      </div>
 
       {loading && <p>Loading walkthroughs...</p>}
 

@@ -287,3 +287,11 @@ button:disabled {
   background: #e95e35;
   color: white;
 }
+
+.walkthrough-header {
+  margin-bottom: 20px;
+}
+
+.walkthrough-header h2 {
+  margin-bottom: 12px;
+}
