@@ -3,7 +3,7 @@ export function findElement(step: any): Element | null {
     return null;
   }
 
-  console.log("🔍 Finding step:", step);
+  // console.log("🔍 Finding step:", step);
 
   // -----------------------
   // 1. Find by ID
@@ -12,7 +12,7 @@ export function findElement(step: any): Element | null {
     const el = document.getElementById(step.id);
 
     if (el) {
-      console.log("✅ Found by id");
+      // console.log("✅ Found by id");
       return el;
     }
   }
@@ -26,7 +26,7 @@ export function findElement(step: any): Element | null {
         const el = document.querySelector(`[${key}="${value}"]`);
 
         if (el) {
-          console.log("✅ Found by data attribute");
+          // console.log("✅ Found by data attribute");
           return el;
         }
       } catch {}
@@ -41,7 +41,7 @@ export function findElement(step: any): Element | null {
       const el = document.querySelector(`[aria-label="${step.ariaLabel}"]`);
 
       if (el) {
-        console.log("✅ Found by aria-label");
+        // console.log("✅ Found by aria-label");
         return el;
       }
     } catch {}
@@ -55,7 +55,7 @@ export function findElement(step: any): Element | null {
       const el = document.querySelector(`[name="${step.name}"]`);
 
       if (el) {
-        console.log("✅ Found by name");
+        // console.log("✅ Found by name");
         return el;
       }
     } catch {}
@@ -69,7 +69,7 @@ export function findElement(step: any): Element | null {
       const el = document.querySelector(`[placeholder="${step.placeholder}"]`);
 
       if (el) {
-        console.log("✅ Found by placeholder");
+        // console.log("✅ Found by placeholder");
         return el;
       }
     } catch {}
@@ -89,7 +89,7 @@ export function findElement(step: any): Element | null {
           step.accessibleText.replace(/\s+/g, " ").trim().substring(0, 40),
         )
       ) {
-        console.log("✅ Found by accessibleText");
+        // console.log("✅ Found by accessibleText");
         return el;
       }
     }
@@ -103,7 +103,7 @@ export function findElement(step: any): Element | null {
       const el = document.querySelector(step.cssSelector);
 
       if (el) {
-        console.log("✅ Found by cssSelector");
+        // console.log("✅ Found by cssSelector");
         return el;
       }
     } catch (err) {

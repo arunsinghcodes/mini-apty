@@ -19,11 +19,11 @@ function App() {
       try {
         const storage = await chrome.storage.local.get(null);
 
-        console.log("RAW STORAGE:", storage);
+        // console.log("RAW STORAGE:", storage);
 
         const token = storage.token ?? null;
 
-        console.log("TOKEN:", token);
+        // console.log("TOKEN:", token);
 
         restore((token as string | undefined) ?? null);
       } catch (error) {

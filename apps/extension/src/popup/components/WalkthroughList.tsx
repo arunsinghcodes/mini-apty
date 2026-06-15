@@ -16,31 +16,10 @@ interface Props {
 function WalkthroughList({ onBack }: Props) {
   const [walkthroughs, setWalkthroughs] = useState<Walkthrough[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   async function fetchWalkthroughs() {
-  //     try {
-  //       const data = await getWalkthroughs();
-  //       console.log("Walkthroughs:", data);
-  //       setWalkthroughs(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   fetchWalkthroughs();
-  // }, []);
-
   useEffect(() => {
     async function fetchWalkthroughs() {
       try {
         const data = await getWalkthroughs();
-
-        console.log("API Response:", data);
-        console.log("Is Array:", Array.isArray(data));
-
         setWalkthroughs(data);
       } catch (error) {
         console.error(error);
@@ -58,7 +37,7 @@ function WalkthroughList({ onBack }: Props) {
       currentWindow: true,
     });
 
-    console.log("Active tab:", tab);
+    // console.log("Active tab:", tab);
 
     if (!tab?.id) return;
 

@@ -1,5 +1,5 @@
 export async function saveToken(token: string) {
-  console.log("Saving token:", token);
+  // console.log("Saving token:", token);
 
   await chrome.storage.local.set({
     token,
@@ -7,13 +7,13 @@ export async function saveToken(token: string) {
 
   const result = await chrome.storage.local.get(null);
 
-  console.log("Storage after save:", result);
+  // console.log("Storage after save:", result);
 }
 
 export async function getToken() {
   const result = await chrome.storage.local.get(null);
 
-  console.log("Storage while reading:", result);
+  // console.log("Storage while reading:", result);
 
   return result.token ?? null;
 }
