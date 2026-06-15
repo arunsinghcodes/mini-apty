@@ -17,6 +17,16 @@ export class WalkthroughPlayer {
 
     this.currentStep = 0;
 
+    document
+      .getElementById("mini-apty-next")
+      ?.addEventListener("click", () => this.next());
+    document
+      .getElementById("mini-apty-prev")
+      ?.addEventListener("click", () => this.previous());
+    document
+      .getElementById("mini-apty-close")
+      ?.addEventListener("click", () => this.close());
+
     this.showStep();
   }
 
