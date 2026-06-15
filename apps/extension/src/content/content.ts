@@ -6,7 +6,7 @@ import { getWalkthrough, saveWalkthrough } from "../api/walkthroughApi";
 import "./overlay/styles.css";
 import { WalkthroughPlayer } from "./player/walkthroughPlayer";
 
-console.log("🚀 Mini Apty Content Script Loaded, Hello");
+console.log("🚀 Mini Apty Content Script Loaded");
 
 let recording = false;
 
