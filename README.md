@@ -20,6 +20,10 @@ Built as part of the **Senior Full Stack Developer Take-Home Challenge**.
 
 ![Home Popup](./screenshots/home-popup.png)
 
+### 📚 Empty Walkthrough List
+
+![Empty Walkthrough List](./screenshots/empty-walkthroughs.png)
+
 ### 📚 Walkthrough List
 
 ![Walkthrough List](./screenshots/walkthrough-list.png)
