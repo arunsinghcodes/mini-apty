@@ -6,6 +6,30 @@ Built as part of the **Senior Full Stack Developer Take-Home Challenge**.
 
 ---
 
+## 📸 Screenshots
+
+### 🔐 Login
+
+![Login](./screenshots/login.png)
+
+### 📝 Create Account
+
+![Create Account](./screenshots/create-account.png)
+
+### 🏠 Home Popup
+
+![Home Popup](./screenshots/home-popup.png)
+
+### 📚 Walkthrough List
+
+![Walkthrough List](./screenshots/walkthrough-list.png)
+
+### ▶️ Walkthrough Playback
+
+![Replay Step 1](./screenshots/replay-step-1.png)
+
+![Replay Step 2](./screenshots/replay-step-2.png)
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
@@ -484,9 +508,6 @@ JWT_SECRET=change-me-to-a-strong-32-char-secret
 
 ---
 
-## Author
+## 🎯 Conclusion
 
-**Arun Kumar Singh**
-Senior Full Stack Developer Candidate
-
-Built with React, TypeScript, Express, MongoDB, and Chrome Manifest V3.
+Mini Apty demonstrates how a lightweight Digital Adoption Platform can be built using Chrome Manifest V3, React, TypeScript, Express, and MongoDB. It provides an intuitive way to record, manage, and replay interactive walkthroughs, helping users navigate complex workflows efficiently.
