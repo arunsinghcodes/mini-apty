@@ -58,12 +58,18 @@ function WalkthroughList({ onBack }: Props) {
       currentWindow: true,
     });
 
-    if (!tab.id) return;
+    console.log("Active tab:", tab);
 
-    await chrome.tabs.sendMessage(tab.id, {
-      type: "PLAY_WALKTHROUGH",
-      walkthroughId: id,
-    });
+    if (!tab?.id) return;
+
+    chrome.tabs
+      .sendMessage(tab.id, {
+        type: "PLAY_WALKTHROUGH",
+        walkthroughId: id,
+      })
+      .catch((err) => {
+        console.error("sendMessage failed:", err);
+      });
   }
 
   async function handleDelete(id: string) {

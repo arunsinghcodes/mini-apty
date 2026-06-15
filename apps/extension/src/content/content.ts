@@ -54,30 +54,57 @@ async function saveCurrentWalkthrough() {
 
 // ─── Message listener ─────────────────────────────────────────────────────────
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  // ─── START RECORDING ───────────────────────────────────────────────────────
   if (message.type === "START_RECORDING") {
     recording = true;
     recorder.title = `Walkthrough-${new Date().toISOString()}`;
     recorder.steps = [];
+
     console.log("🎥 Recording Started");
+
     sendResponse({ success: true });
+
+    return false;
   }
 
+  // ─── STOP RECORDING ────────────────────────────────────────────────────────
   if (message.type === "STOP_RECORDING") {
     recording = false;
+
     console.log("🛑 Recording Stopped");
-    saveCurrentWalkthrough();
-    sendResponse({ success: true });
+
+    saveCurrentWalkthrough()
+      .then(() => {
+        sendResponse({ success: true });
+      })
+      .catch((err) => {
+        console.error(err);
+
+        sendResponse({
+          success: false,
+          error: String(err),
+        });
+      });
+
+    return true;
   }
 
+  // ─── PLAY WALKTHROUGH ──────────────────────────────────────────────────────
   if (message.type === "PLAY_WALKTHROUGH") {
     getWalkthrough(message.walkthroughId)
       .then((walkthrough) => {
-        // ✅ Buttons are wired inside player.start() — no duplicate listeners
+        console.log("✅ Walkthrough loaded");
+
         const player = new WalkthroughPlayer(walkthrough);
         player.start();
       })
-      .catch((err) => console.error("❌ Play failed:", err));
+      .catch((err) => {
+        console.error("❌ Play failed:", err);
+      });
+
+    // No async response expected
+    return false;
   }
 
-  return true;
+  return false;
 });
